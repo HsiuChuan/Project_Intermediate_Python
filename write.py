@@ -14,6 +14,7 @@ import csv
 import json
 import datetime
 
+
 def write_to_csv(results, filename):
     """Write an iterable of `CloseApproach` objects to a CSV file.
 
@@ -25,7 +26,6 @@ def write_to_csv(results, filename):
     :param filename: A Path-like object pointing to where the data should be saved.
     """
     fieldnames = ('datetime_utc', 'distance_au', 'velocity_km_s', 'designation', 'name', 'diameter_km', 'potentially_hazardous')
-    # TODO: Write the results to a CSV file, following the specification in the instructions.
     with open(filename, 'w') as outfile:
         writer = csv.DictWriter(outfile, fieldnames=fieldnames)
         writer.writeheader()
@@ -40,7 +40,6 @@ def write_to_csv(results, filename):
 
             data = [datetime_utc, distance_au, velocity_km_s, designation, name, diameter_km, potentially_hazardous]
             writer.writerow(dict(zip(fieldnames, data)))
-        
 
 
 def write_to_json(results, filename):
@@ -54,8 +53,6 @@ def write_to_json(results, filename):
     :param results: An iterable of `CloseApproach` objects.
     :param filename: A Path-like object pointing to where the data should be saved.
     """
-
-    # TODO: Write the results to a JSON file, following the specification in the instructions.
     data = []
     for row in results:
         datetime_utc = datetime.datetime.strftime(row.time, "%Y-%m-%d %H:%M")
@@ -65,21 +62,21 @@ def write_to_json(results, filename):
         name = row.neo.name
         diameter_km = row.neo.diameter if row.neo.diameter is not None else 'nan'
         potentially_hazardous = bool(1) if row.neo.hazardous == 'Y' else bool(0)
-            
+
         data.append(
             {
                 "datetime_utc": datetime_utc,
-                "distance_au": distance_au, 
+                "distance_au": distance_au,
                 "velocity_km_s": velocity_km_s,
                 "neo":
                 {
                     "designation": designation,
                     "name": name,
-                    "diameter_km": diameter_km, 
+                    "diameter_km": diameter_km,
                     "potentially_hazardous": potentially_hazardous
                 }
             }
         )
 
-    with open(filename, 'w') as outfile:        
+    with open(filename, 'w') as outfile:
         json.dump(data, outfile, indent=2)
