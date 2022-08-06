@@ -22,8 +22,7 @@ The `query` subcommand searches for close approaches that match given criteria:
     $ python3 main.py query --start-date 2000-01-01 --max-diameter 0.1 --not-hazardous
     $ python3 main.py query --hazardous --max-distance 0.05 --min-velocity 30
 
-The set of results can be limited in size and/or saved to an output file in CSV
-or JSON format:
+The set of results can be limited in size and/or saved to an output file in CSV or JSON format:
 
     $ python3 main.py query --limit 5 --outfile results.csv
     $ python3 main.py query --limit 15 --outfile results.json
