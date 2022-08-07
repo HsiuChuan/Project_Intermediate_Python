@@ -17,6 +17,7 @@ iterator.
 You'll edit this file in Tasks 3a and 3c.
 """
 import operator
+from itertools import islice
 
 
 class UnsupportedCriterionError(NotImplementedError):
@@ -38,6 +39,7 @@ class AttributeFilter:
     Concrete subclasses can override the `get` classmethod to provide custom
     behavior to fetch a desired attribute from the given `CloseApproach`.
     """
+
     def __init__(self, op, value):
         """Construct a new `AttributeFilter` from an binary predicate and a reference value.
 
@@ -69,37 +71,53 @@ class AttributeFilter:
         raise UnsupportedCriterionError
 
     def __repr__(self):
+        """Return code-like string representation."""
         return f"{self.__class__.__name__}(op=operator.{self.op.__name__}, value={self.value})"
 
 
 # Having multi-opertor
 class DateFilter(AttributeFilter):
+    """Class for  date result of this approach."""
+
     @classmethod
     def get(cls, approach):
+        """Return filting date result of this approach."""
         return approach.time.date()
 
 
 class DistanceFilter(AttributeFilter):
+    """Class for filting istance result of this approach."""
+
     @classmethod
     def get(cls, approach):
+        """Return dfilting istance result of this approach."""
         return approach.distance
 
 
 class VelocityFilter(AttributeFilter):
+    """Class for filting velocity result of this approach."""
+
     @classmethod
     def get(cls, approach):
+        """Reture filting velocity result of this approach."""
         return float(approach.velocity)
 
 
 class DiameterFilter(AttributeFilter):
+    """Class for filting diameter result of this approach."""
+
     @classmethod
     def get(cls, approach):
+        """Return filting diameter result of this approach."""
         return approach.neo.diameter
 
 
 class HazardousFilter(AttributeFilter):
+    """Class for hazardous result of this approach."""
+
     @classmethod
     def get(cls, approach):
+        """Return hazardous result of this approach."""
         return approach.neo.hazardous
 
 
@@ -171,7 +189,8 @@ def limit(iterator, n=None):
     :param n: The maximum number of values to produce.
     :yield: The first (at most) `n` values from the iterator.
     """
-    if n == 0 or n is None:
-        return iterator
-    else:
-        return [value for index, value in enumerate(iterator) if index < n]
+    # use islice recommended from review
+    if n == 0:
+        n = None
+    for item in islice(iterator, 0, n):
+        yield item

@@ -22,7 +22,7 @@ from helpers import cd_to_datetime, datetime_to_str
 
 class NearEarthObject:
     """A near-Earth object (NEO).
-
+    
     An NEO encapsulates semantic and physical parameters about the object, such
     as its primary designation (required, unique), IAU name (optional), diameter
     in kilometers (optional - sometimes unknown), and whether it's marked as
@@ -32,6 +32,7 @@ class NearEarthObject:
     initialized to an empty collection, but eventually populated in the
     `NEODatabase` constructor.
     """
+
     def __init__(self, **info):
         """Create a new `NearEarthObject`.
 
@@ -74,6 +75,7 @@ class CloseApproach:
     private attribute, but the referenced NEO is eventually replaced in the
     `NEODatabase` constructor.
     """
+
     def __init__(self, **info):
         """Create a new `CloseApproach`.
 
