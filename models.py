@@ -37,11 +37,14 @@ class NearEarthObject:
 
         :param info: A dictionary of excess keyword arguments supplied to the constructor.
         """
-        self.designation = info['designation'] if 'designation' in info.keys() and info['designation'] is not None else ''
-        self.name = info['name']
-        self.diameter = float(info['diameter']) if 'diameter' in info.keys() and info['diameter'] is not None else float('nan')
-        self.hazardous = info.get("hazardous")
-        self.approaches = []
+        try:
+            self.designation = info['designation'] if 'designation' in info.keys() and info['designation'] is not None else ''
+            self.name = info['name']
+            self.diameter = float(info['diameter']) if 'diameter' in info.keys() and info['diameter'] is not None else float('nan')
+            self.hazardous = info.get("hazardous")
+            self.approaches = []
+        except ValueError as err:
+            print(f'Input info with error: {err}')
 
     @property
     def fullname(self):
@@ -76,11 +79,13 @@ class CloseApproach:
 
         :param info: A dictionary of excess keyword arguments supplied to the constructor.
         """
-        self._designation = info['designation']
-        self.time = cd_to_datetime(info['time']) if 'time' in info.keys() and info['time'] is not None else None
-        self.distance = float(info['distance']) if 'distance' in info.keys() else float(0.0)
-        self.velocity = float(info['velocity']) if 'velocity' in info.keys() and info['velocity'] is not None else float(0.0)
-
+        try:
+            self._designation = info['designation']
+            self.time = cd_to_datetime(info['time']) if 'time' in info.keys() and info['time'] is not None else None
+            self.distance = float(info['distance']) if 'distance' in info.keys() else float(0.0)
+            self.velocity = float(info['velocity']) if 'velocity' in info.keys() and info['velocity'] is not None else float(0.0)
+        except ValueError as err:
+            print(f'Input info with error: {err}')
         # Create an attribute for the referenced NEO, originally None.
         self.neo = None
 
